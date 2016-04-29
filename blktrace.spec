@@ -4,7 +4,7 @@
 #
 Name     : blktrace
 Version  : 1.1.0
-Release  : 8
+Release  : 9
 URL      : http://brick.kernel.dk/snaps/blktrace-1.1.0.tar.gz
 Source0  : http://brick.kernel.dk/snaps/blktrace-1.1.0.tar.gz
 Summary  : Block IO tracer
