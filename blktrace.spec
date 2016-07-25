@@ -4,13 +4,16 @@
 #
 Name     : blktrace
 Version  : 1.1.0
-Release  : 10
+Release  : 11
 URL      : http://brick.kernel.dk/snaps/blktrace-1.1.0.tar.gz
 Source0  : http://brick.kernel.dk/snaps/blktrace-1.1.0.tar.gz
 Summary  : Block IO tracer
 Group    : Development/Tools
 License  : GPL-2.0
+Requires: blktrace-bin
+Requires: blktrace-doc
 BuildRequires : libaio-dev
+Patch1: 0001-Makefile-fix-prefix-and-manpath.patch
 
 %description
 btrace can show detailed info about what is happening on a block
@@ -22,10 +25,28 @@ Authors:
 --------
     Jens Axboe <axboe@kernel.dk>
 
+%package bin
+Summary: bin components for the blktrace package.
+Group: Binaries
+
+%description bin
+bin components for the blktrace package.
+
+
+%package doc
+Summary: doc components for the blktrace package.
+Group: Documentation
+
+%description doc
+doc components for the blktrace package.
+
+
 %prep
 %setup -q -n blktrace-1.1.0
+%patch1 -p1
 
 %build
+export LANG=C
 make V=1 CFLAGS="%{optflags}" all
 
 %install
@@ -34,24 +55,22 @@ rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root,-)
-/usr/local/bin/blkiomon
-/usr/local/bin/blkparse
-/usr/local/bin/blkrawverify
-/usr/local/bin/blktrace
-/usr/local/bin/bno_plot.py
-/usr/local/bin/btrace
-/usr/local/bin/btrecord
-/usr/local/bin/btreplay
-/usr/local/bin/btt
-/usr/local/bin/iowatcher
-/usr/local/bin/verify_blkparse
-/usr/local/man/man1/blkparse.1
-/usr/local/man/man1/blkrawverify.1
-/usr/local/man/man1/bno_plot.1
-/usr/local/man/man1/btt.1
-/usr/local/man/man1/verify_blkparse.1
-/usr/local/man/man8/blkiomon.8
-/usr/local/man/man8/blktrace.8
-/usr/local/man/man8/btrace.8
-/usr/local/man/man8/btrecord.8
-/usr/local/man/man8/btreplay.8
+
+%files bin
+%defattr(-,root,root,-)
+/usr/bin/blkiomon
+/usr/bin/blkparse
+/usr/bin/blkrawverify
+/usr/bin/blktrace
+/usr/bin/bno_plot.py
+/usr/bin/btrace
+/usr/bin/btrecord
+/usr/bin/btreplay
+/usr/bin/btt
+/usr/bin/iowatcher
+/usr/bin/verify_blkparse
+
+%files doc
+%defattr(-,root,root,-)
+%doc /usr/share/man/man1/*
+%doc /usr/share/man/man8/*
