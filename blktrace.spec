@@ -4,7 +4,7 @@
 #
 Name     : blktrace
 Version  : 1.1.0
-Release  : 11
+Release  : 12
 URL      : http://brick.kernel.dk/snaps/blktrace-1.1.0.tar.gz
 Source0  : http://brick.kernel.dk/snaps/blktrace-1.1.0.tar.gz
 Summary  : Block IO tracer
@@ -47,9 +47,11 @@ doc components for the blktrace package.
 
 %build
 export LANG=C
+export SOURCE_DATE_EPOCH=1484424831
 make V=1 CFLAGS="%{optflags}" all
 
 %install
+export SOURCE_DATE_EPOCH=1484424831
 rm -rf %{buildroot}
 %make_install
 
