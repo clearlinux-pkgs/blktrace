@@ -4,15 +4,15 @@
 #
 Name     : blktrace
 Version  : 1.2.0
-Release  : 19
-URL      : http://brick.kernel.dk/snaps/blktrace-1.2.0.tar.gz
-Source0  : http://brick.kernel.dk/snaps/blktrace-1.2.0.tar.gz
+Release  : 20
+URL      : https://brick.kernel.dk/snaps/blktrace-1.2.0.tar.gz
+Source0  : https://brick.kernel.dk/snaps/blktrace-1.2.0.tar.gz
 Summary  : Block IO tracer
 Group    : Development/Tools
 License  : GPL-2.0
-Requires: blktrace-bin
-Requires: blktrace-license
-Requires: blktrace-man
+Requires: blktrace-bin = %{version}-%{release}
+Requires: blktrace-license = %{version}-%{release}
+Requires: blktrace-man = %{version}-%{release}
 BuildRequires : libaio-dev
 Patch1: 0001-Makefile-fix-prefix-and-manpath.patch
 Patch2: CVE-2018-10689.patch
@@ -30,8 +30,7 @@ Authors:
 %package bin
 Summary: bin components for the blktrace package.
 Group: Binaries
-Requires: blktrace-license
-Requires: blktrace-man
+Requires: blktrace-license = %{version}-%{release}
 
 %description bin
 bin components for the blktrace package.
@@ -55,6 +54,7 @@ man components for the blktrace package.
 
 %prep
 %setup -q -n blktrace-1.2.0
+cd %{_builddir}/blktrace-1.2.0
 %patch1 -p1
 %patch2 -p1
 
@@ -62,20 +62,25 @@ man components for the blktrace package.
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1529024715
-export CFLAGS="$CFLAGS -fstack-protector-strong -mzero-caller-saved-regs=used "
-export FCFLAGS="$CFLAGS -fstack-protector-strong -mzero-caller-saved-regs=used "
-export FFLAGS="$CFLAGS -fstack-protector-strong -mzero-caller-saved-regs=used "
-export CXXFLAGS="$CXXFLAGS -fstack-protector-strong -mzero-caller-saved-regs=used "
-make CFLAGS="%{optflags}" all
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1579821610
+export GCC_IGNORE_WERROR=1
+export AR=gcc-ar
+export RANLIB=gcc-ranlib
+export NM=gcc-nm
+export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 -fstack-protector-strong -mzero-caller-saved-regs=used "
+export FCFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 -fstack-protector-strong -mzero-caller-saved-regs=used "
+export FFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 -fstack-protector-strong -mzero-caller-saved-regs=used "
+export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 -fstack-protector-strong -mzero-caller-saved-regs=used "
+make  CFLAGS="%{optflags}" all
+
 
 %install
-export SOURCE_DATE_EPOCH=1529024715
+export SOURCE_DATE_EPOCH=1579821610
 rm -rf %{buildroot}
-mkdir -p %{buildroot}/usr/share/doc/blktrace
-cp COPYING %{buildroot}/usr/share/doc/blktrace/COPYING
-cp iowatcher/COPYING %{buildroot}/usr/share/doc/blktrace/iowatcher_COPYING
+mkdir -p %{buildroot}/usr/share/package-licenses/blktrace
+cp %{_builddir}/blktrace-1.2.0/COPYING %{buildroot}/usr/share/package-licenses/blktrace/0b184ad51ba2a79e85d2288d5fcf8a1ea0481ea4
+cp %{_builddir}/blktrace-1.2.0/iowatcher/COPYING %{buildroot}/usr/share/package-licenses/blktrace/4cc77b90af91e615a64ae04893fdffa7939db84c
 %make_install
 
 %files
@@ -96,12 +101,12 @@ cp iowatcher/COPYING %{buildroot}/usr/share/doc/blktrace/iowatcher_COPYING
 /usr/bin/verify_blkparse
 
 %files license
-%defattr(-,root,root,-)
-/usr/share/doc/blktrace/COPYING
-/usr/share/doc/blktrace/iowatcher_COPYING
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/blktrace/0b184ad51ba2a79e85d2288d5fcf8a1ea0481ea4
+/usr/share/package-licenses/blktrace/4cc77b90af91e615a64ae04893fdffa7939db84c
 
 %files man
-%defattr(-,root,root,-)
+%defattr(0644,root,root,0755)
 /usr/share/man/man1/blkparse.1
 /usr/share/man/man1/blkrawverify.1
 /usr/share/man/man1/bno_plot.1
