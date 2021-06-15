@@ -4,7 +4,7 @@
 #
 Name     : blktrace
 Version  : 1.2.0
-Release  : 21
+Release  : 22
 URL      : https://brick.kernel.dk/snaps/blktrace-1.2.0.tar.gz
 Source0  : https://brick.kernel.dk/snaps/blktrace-1.2.0.tar.gz
 Summary  : Block IO tracer
@@ -63,20 +63,20 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1579821610
+export SOURCE_DATE_EPOCH=1623782481
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
 export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 -fstack-protector-strong -fzero-call-used-regs=used "
-export FCFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 -fstack-protector-strong -fzero-call-used-regs=used "
-export FFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 -fstack-protector-strong -fzero-call-used-regs=used "
+export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 -fstack-protector-strong -fzero-call-used-regs=used "
+export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 -fstack-protector-strong -fzero-call-used-regs=used "
 export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 -fstack-protector-strong -fzero-call-used-regs=used "
 make  CFLAGS="%{optflags}" all
 
 
 %install
-export SOURCE_DATE_EPOCH=1579821610
+export SOURCE_DATE_EPOCH=1623782481
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/blktrace
 cp %{_builddir}/blktrace-1.2.0/COPYING %{buildroot}/usr/share/package-licenses/blktrace/0b184ad51ba2a79e85d2288d5fcf8a1ea0481ea4
