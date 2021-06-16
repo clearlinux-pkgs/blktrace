@@ -1,6 +1,8 @@
---- a/Makefile	2014-09-24 12:52:31.000000000 -0700
-+++ b/Makefile	2016-07-25 10:39:25.673016845 -0700
-@@ -56,9 +56,9 @@
+diff --git a/Makefile b/Makefile
+index eb3c6a1..5f7a3ca 100644
+--- a/Makefile
++++ b/Makefile
+@@ -52,9 +52,9 @@ depend:
  	@$(CC) -MM $(ALL_CFLAGS) *.c 1> .depend
  
  INSTALL = install
